@@ -19,6 +19,11 @@ const taskReducer = (state, action) => {
 
       return newTasks;
 
+    case "delete":
+      const filteredTasks = state.filter((task) => task.id !== action.id);
+
+      return filteredTasks;
+
     default:
       break;
   }
@@ -32,7 +37,7 @@ const TaskProvider = (props) => {
   };
 
   const editTaskHandler = (id, name) => {
-    dispatchTask({ type: "edit", name });
+    dispatchTask({ type: "edit", payload: { name, id } });
   };
 
   const deleteTaskHandler = (id) => {
