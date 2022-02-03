@@ -1,0 +1,27 @@
+.item {
+  padding: 1rem;
+  margin: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  //   background-color: orangered;
+  border-bottom: 1px solid;
+
+  &__inputs {
+    padding: 0 2rem;
+    // background-color: blue;
+
+    align-items: center;
+
+    &--name {
+      display: inline-block;
+      padding: 0 2rem;
+    }
+  }
+
+  &__buttons {
+    flex-grow: 0.03;
+    display: flex;
+    justify-content: space-between;
+  }
+}
