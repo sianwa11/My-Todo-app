@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 
 import { FaTrash, FaEdit, FaSave, FaArrowLeft } from "react-icons/fa";
 import styles from "./ListItem.module.scss";
