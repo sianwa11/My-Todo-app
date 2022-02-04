@@ -15,7 +15,6 @@ const taskReducer = (state, action) => {
       };
 
       const newTasks = [newTask, ...state];
-      console.log(newTasks);
 
       return newTasks;
 
@@ -42,7 +41,6 @@ const taskReducer = (state, action) => {
         return task;
       });
 
-      console.log(toggledTask);
       return toggledTask;
 
     default:
