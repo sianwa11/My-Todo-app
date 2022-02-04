@@ -16,7 +16,10 @@ const Form = (props) => {
   const addTaskHandler = (e) => {
     e.preventDefault();
 
-    if (newTask === "") return;
+    if (newTask === "") {
+      props.onNotice(`Task cannot be empty `);
+      return;
+    }
 
     taskCtx.addTask(newTask);
     setTask("");

@@ -33,6 +33,18 @@ const taskReducer = (state, action) => {
       });
       return editedTask;
 
+    case "toggleComplete":
+      const toggledTask = state.map((task) => {
+        if (task.id === action.id) {
+          return { ...task, completed: !task.completed };
+        }
+
+        return task;
+      });
+
+      console.log(toggledTask);
+      return toggledTask;
+
     default:
       break;
   }
@@ -53,11 +65,16 @@ const TaskProvider = (props) => {
     dispatchTask({ type: "delete", id });
   };
 
+  const toggleCompleteHandler = (id) => {
+    dispatchTask({ type: "toggleComplete", id });
+  };
+
   const taskContext = {
     tasks: taskState,
     addTask: addTaskHandler,
     editTask: editTaskHandler,
     deleteTask: deleteTaskHandler,
+    toggleComplete: toggleCompleteHandler,
   };
 
   return (

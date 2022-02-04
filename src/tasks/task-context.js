@@ -5,6 +5,7 @@ const TaskContext = React.createContext({
   addTask: (name) => {},
   editTask: (id, name) => {},
   deleteTask: (id) => {},
+  toggleComplete: (id) => {},
 });
 
 export default TaskContext;

@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import { FaTrash, FaEdit, FaSave, FaArrowLeft } from "react-icons/fa";
 import styles from "./ListItem.module.scss";
@@ -8,6 +8,7 @@ const ListItem = (props) => {
   const [editTask, setEditTask] = useState(false);
 
   const taskCtx = useContext(TaskContext);
+
   const inputEl = useRef(null);
 
   const deleteItemHandler = (id) => {
@@ -17,9 +18,16 @@ const ListItem = (props) => {
   const editItemHandler = (id) => {
     const name = inputEl.current.value;
 
-    if (name === "") return;
+    if (name === "") {
+      props.onNotice("Task cannot be empty");
+      return;
+    }
 
     taskCtx.editTask(id, name);
+  };
+
+  const toggleCompleteHandler = (id) => {
+    taskCtx.toggleComplete(id);
   };
 
   const onSubmitHandler = (e) => {
@@ -58,7 +66,12 @@ const ListItem = (props) => {
   const itemsTemplate = (
     <>
       <div className={styles.item__inputs}>
-        <input type="checkbox" />
+        <input
+          id={props.id}
+          type="checkbox"
+          defaultChecked={props.completed}
+          onChange={toggleCompleteHandler.bind(null, props.id)}
+        />
         <div className={styles["item__inputs--name"]}>{props.name}</div>
       </div>
 

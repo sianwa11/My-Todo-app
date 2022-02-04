@@ -9,7 +9,7 @@ const Popup = (props) => {
   const className = `${styles.popup} ${styles["animate-notice"]}`;
 
   return ReactDOM.createPortal(
-    <div className={className}>{props.children}</div>,
+    <div className={className}>{props.message}</div>,
     document.getElementById("pop-up")
   );
 };
