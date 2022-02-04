@@ -1,23 +1,28 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import TaskContext from "../../tasks/task-context";
 import ListItem from "./ListItem/ListItem";
-import { FaFilter } from "react-icons/fa";
 
 import styles from "./ToDo.module.scss";
+import Filter from "../Input/Filter";
 
 const FILTER_TASKS = {
-  All: () => {},
+  All: () => true,
   Complete: (task) => task.completed,
   Pending: (task) => !task.completed,
 };
 
 const ToDoList = (props) => {
+  const [filter, setFilter] = useState("All");
+
   const taskCtx = useContext(TaskContext);
   const tasks = taskCtx.tasks;
-  const filter = "Complete";
+
+  const filterHandler = (e) => {
+    setFilter(e.target.value);
+  };
 
   const renderedTasks = tasks
-    // .filter((task) => task.completed)
+    .filter(FILTER_TASKS[filter])
     .map((task) => (
       <ListItem
         key={task.id}
@@ -27,14 +32,11 @@ const ToDoList = (props) => {
         completed={task.completed}
       />
     ));
+
   return (
     <>
       <div className={styles.todo}>
-        <h4 className={styles.todo__text}>{tasks.length} tasks remaining</h4>
-
-        <div>
-          <FaFilter /> <span>Filter</span>
-        </div>
+        <Filter filter={filter} onChange={filterHandler} />
 
         <div>
           <ul className={styles.todo__list}>{renderedTasks}</ul>
