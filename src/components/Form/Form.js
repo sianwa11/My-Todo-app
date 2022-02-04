@@ -16,6 +16,8 @@ const Form = (props) => {
   const addTaskHandler = (e) => {
     e.preventDefault();
 
+    if (newTask === "") return;
+
     taskCtx.addTask(newTask);
     setTask("");
   };

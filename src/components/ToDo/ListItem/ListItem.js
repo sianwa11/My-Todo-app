@@ -1,34 +1,90 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 
-import { FaTrash, FaEdit } from "react-icons/fa";
+import { FaTrash, FaEdit, FaSave, FaArrowLeft } from "react-icons/fa";
 import styles from "./ListItem.module.scss";
 import TaskContext from "../../../tasks/task-context";
 
 const ListItem = (props) => {
-  const taskCtx = useContext(TaskContext);
+  const [editTask, setEditTask] = useState(false);
 
-  const [editTask, setEditTask] = useState(true);
+  const taskCtx = useContext(TaskContext);
+  const inputEl = useRef(null);
 
   const deleteItemHandler = (id) => {
     taskCtx.deleteTask(id);
   };
 
-  return (
-    <li className={styles.item}>
+  const editItemHandler = (id) => {
+    const name = inputEl.current.value;
+
+    if (name === "") return;
+
+    taskCtx.editTask(id, name);
+  };
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+
+    setEditTask(false);
+  };
+
+  const editTemplate = (
+    <>
+      <form className={styles.form__items} onSubmit={onSubmitHandler}>
+        <div className={styles.form__input}>
+          <input
+            type="text"
+            className={styles["form__input--text"]}
+            ref={inputEl}
+          />
+        </div>
+
+        <div className={styles.form__buttons}>
+          <button
+            className={styles["move-up"]}
+            onClick={editItemHandler.bind(null, props.id)}
+          >
+            <FaSave />
+          </button>
+
+          <i className={styles["move-up"]}>
+            <FaArrowLeft />
+          </i>
+        </div>
+      </form>
+    </>
+  );
+
+  const itemsTemplate = (
+    <>
       <div className={styles.item__inputs}>
         <input type="checkbox" />
         <div className={styles["item__inputs--name"]}>{props.name}</div>
       </div>
 
       <div className={styles.item__buttons}>
-        <i>
+        <i
+          className={styles["move-up"]}
+          onClick={() => {
+            setEditTask(true);
+          }}
+        >
           <FaEdit />
         </i>
-        <i onClick={deleteItemHandler.bind(null, props.id)}>
+        <i
+          className={styles["move-up"]}
+          onClick={deleteItemHandler.bind(null, props.id)}
+        >
           <FaTrash />
         </i>
       </div>
-    </li>
+    </>
+  );
+
+  return editTask ? (
+    <li className={styles.form}>{editTemplate}</li>
+  ) : (
+    <li className={styles.item}>{itemsTemplate}</li>
   );
 };
 

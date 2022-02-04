@@ -24,6 +24,15 @@ const taskReducer = (state, action) => {
 
       return filteredTasks;
 
+    case "edit":
+      const editedTask = state.map((task) => {
+        if (task.id === action.payload.id) {
+          return { ...task, name: action.payload.name };
+        }
+        return task;
+      });
+      return editedTask;
+
     default:
       break;
   }
